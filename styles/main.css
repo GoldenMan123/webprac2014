@@ -1,0 +1,162 @@
+body {
+    margin: 0px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.header {
+    margin-top: 16px;
+    padding: 8px;
+    width: 80%;
+    border-radius: 16px;
+    background: #88CCFF;
+    font-size: 48px;
+    text-align: center;
+    color: black;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header:hover {
+    background: #88CC00;
+}
+
+.button_main_left {
+    margin-top: 16px;
+    float: left;
+    padding: 8px;
+    width: 35%;
+    border-radius: 16px;
+    background: #88CCFF;
+    font-size: 48px;
+    text-align: center;
+    color: black;
+    margin-left: 12.5%;
+    margin-right: 0;
+    vertical-align: center;
+}
+
+.button_main_left:hover {
+    background: #88CC00;
+}
+
+.button_main_right {
+    margin-top: 16px;
+    float: right;
+    padding: 8px;
+    width: 35%;
+    border-radius: 16px;
+    background: #88CCFF;
+    font-size: 48px;
+    text-align: center;
+    color: black;
+    margin-left: 0;
+    margin-right: 12.5%;
+    vertical-align: center;
+}
+
+.button_main_right:hover {
+    background: #88CC00;
+}
+
+.page_title {
+    margin-top: 16px;
+    padding: 8px;
+    width: 70%;
+    border-radius: 16px;
+    background: #88CCFF;
+    font-size: 44px;
+    text-align: center;
+    color: black;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.student_entry {
+    margin-top: 16px;
+    padding: 8px;
+    width: 70%;
+    border-radius: 16px;
+    background: #88CCFF;
+    font-size: 40px;
+    text-align: center;
+    color: black;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.student_entry:hover {
+    background: #88CC00;
+}
+
+.fio_field {
+    margin-top: 16px;
+    padding: 8px;
+    width: 70%;
+    border-radius: 16px;
+    background: #88CCFF;
+    font-size: 40px;
+    text-align: center;
+    color: black;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.fio_field input {
+    font-size: 40px;
+    padding: 4px;
+    width: 100%;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.ok_button {
+    margin-top: 16px;
+    float: left;
+    padding: 8px;
+    width: 33%;
+    border-radius: 16px;
+    background: #88CCFF;
+    font-size: 40px;
+    text-align: center;
+    color: black;
+    margin-left: 15%;
+    margin-right: 0;
+    vertical-align: center;
+}
+
+.ok_button:hover {
+    background: #88CC00;
+}
+
+.cancel_button {
+    margin-top: 16px;
+    float: right;
+    padding: 8px;
+    width: 33%;
+    border-radius: 16px;
+    background: #88CCFF;
+    font-size: 40px;
+    text-align: center;
+    color: black;
+    margin-left: 0%;
+    margin-right: 15%;
+    vertical-align: center;
+}
+
+.cancel_button:hover {
+    background: #88CC00;
+}
+
+.plain_text {
+    margin-top: 16px;
+    padding: 8px;
+    width: 70%;
+    font-size: 40px;
+    text-align: center;
+    color: black;
+    margin-left: auto;
+    margin-right: auto;
+}
