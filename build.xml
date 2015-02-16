@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="webprac2014" basedir="." default="all">
+
+    <property name="db.driver" value="com.mysql.jdbc.Driver"/>
+	<property name="db.url" value="jdbc:mysql://localhost:3306/?characterEncoding=UTF-8"/>
+	<property name="db.user" value="root"/>
+	<property name="db.pw" value="root"/>
+	<property name="db.dir" value="db"/>
+    
+	<target name="createDB">
+		<echo message="Creating database using: ${db.driver} ${db.url}" />
+		<sql driver="${db.driver}" url="${db.url}" userid="${db.user}" password="${db.pw}" onerror="continue">
+			<classpath>
+				<fileset dir="${db.dir}">
+					<include name="mysql*.jar"/>
+				</fileset>
+			</classpath>
+			<transaction src="${db.dir}/createDB.sql" />
+		</sql>
+	</target>
+	
+	<target name="createTables">
+		<echo message="Creating tables using: ${db.driver} ${db.url}" />
+		<sql driver="${db.driver}" url="${db.url}" userid="${db.user}" password="${db.pw}" onerror="continue">
+			<classpath>
+				<fileset dir="${db.dir}">
+					<include name="mysql*.jar"/>
+				</fileset>
+			</classpath>
+			<transaction src="${db.dir}/initDB.sql" />
+		</sql>
+	</target>
+
+	<target name="populateDB">
+		<echo message="Populating database using: ${db.driver} ${db.url}" />
+		<sql driver="${db.driver}" url="${db.url}" userid="${db.user}" password="${db.pw}">
+			<classpath>
+				<fileset dir="${db.dir}">
+					<include name="mysql*.jar"/>
+				</fileset>
+			</classpath>
+			<transaction src="${db.dir}/populateDB.sql"/>
+		</sql>
+	</target>
+	
+	<target name="showDB">
+		<sql driver="${db.driver}" url="${db.url}" userid="${db.user}" password="${db.pw}" print="yes" onerror="continue">
+			<classpath>
+				<fileset dir="${db.dir}">
+					<include name="mysql*.jar"/>
+				</fileset>
+			</classpath>
+			<transaction src="${db.dir}/showDB.sql" />
+		</sql>
+	</target>
+	
+	<target name="clearDB">
+		<echo message="Clearing database using: ${db.driver} ${db.url}" />
+		<sql driver="${db.driver}" url="${db.url}" userid="${db.user}" password="${db.pw}" onerror="continue">
+			<classpath>
+				<fileset dir="${db.dir}">
+					<include name="mysql*.jar"/>
+				</fileset>
+			</classpath>
+			<transaction src="${db.dir}/emptyDB.sql" />
+		</sql>
+	</target>
+	
+	<target name="deleteTables">
+		<echo message="Deleting tables using: ${db.driver} ${db.url}" />
+		<sql driver="${db.driver}" url="${db.url}" userid="${db.user}" password="${db.pw}" onerror="continue">
+			<classpath>
+				<fileset dir="${db.dir}">
+					<include name="mysql*.jar"/>
+				</fileset>
+			</classpath>
+			<transaction src="${db.dir}/dropTables.sql" />
+		</sql>
+	</target>
+
+	<target name="deleteDB">
+		<echo message="Deleting database using: ${db.driver} ${db.url}" />
+		<sql driver="${db.driver}" url="${db.url}" userid="${db.user}" password="${db.pw}" onerror="continue">
+			<classpath>
+				<fileset dir="${db.dir}">
+					<include name="mysql*.jar"/>
+				</fileset>
+			</classpath>
+			<transaction src="${db.dir}/dropDB.sql" />
+		</sql>
+	</target>
+
+	<target name="all" depends="createDB, createTables, populateDB, showDB, clearDB, deleteTables, deleteDB" />
+
+</project>
