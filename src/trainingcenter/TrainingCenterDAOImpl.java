@@ -109,32 +109,45 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 
 	@Override
 	public List<Lesson> getAllLessons() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		@SuppressWarnings("unchecked")
+		List<Lesson> list = session.createCriteria(Lesson.class).list();
+		session.getTransaction().commit();
+		return list;
 	}
 
 	@Override
 	public Lesson loadLesson(Integer lessonId) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		Lesson lesson = (Lesson) session.load(Lesson.class, lessonId);
+		session.getTransaction().commit();
+		return lesson;
 	}
 
 	@Override
 	public void storeLesson(Lesson lesson) {
-		// TODO Auto-generated method stub
-
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		session.save(lesson);
+		session.getTransaction().commit();
 	}
 
 	@Override
 	public void deleteLesson(Lesson lesson) {
-		// TODO Auto-generated method stub
-
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		session.delete(lesson);
+		session.getTransaction().commit();
 	}
 
 	@Override
 	public void updateLesson(Lesson lesson) {
-		// TODO Auto-generated method stub
-
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		session.update(lesson);
+		session.getTransaction().commit();
 	}
 
 	@Override
@@ -225,32 +238,45 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 
 	@Override
 	public List<StudentCourse> getAllStudentCourses() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		@SuppressWarnings("unchecked")
+		List<StudentCourse> list = session.createCriteria(StudentCourse.class).list();
+		session.getTransaction().commit();
+		return list;
 	}
 
 	@Override
 	public StudentCourse loadStudentCourse(Integer linkId) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		StudentCourse link = (StudentCourse) session.load(StudentCourse.class, linkId);
+		session.getTransaction().commit();
+		return link;
 	}
 
 	@Override
 	public void storeStudentCourse(StudentCourse link) {
-		// TODO Auto-generated method stub
-
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		session.save(link);
+		session.getTransaction().commit();
 	}
 
 	@Override
 	public void deleteStudentCourse(StudentCourse link) {
-		// TODO Auto-generated method stub
-
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		session.delete(link);
+		session.getTransaction().commit();
 	}
 
 	@Override
 	public void updateStudentCourse(StudentCourse link) {
-		// TODO Auto-generated method stub
-
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		session.update(link);
+		session.getTransaction().commit();
 	}
 
 	@Override

@@ -337,5 +337,92 @@ public class DAOImplTest {
 			new Object[] { null, true },
 		};
 	}
+	
+	@Test(dataProvider = "studentCourseTestData", dependsOnMethods = { "studentTest", "courseTest" })
+	public void studentCourseTest() {	
+TrainingCenterDAO tc = new TrainingCenterDAOImpl();
+		
+		Integer rows = null;
+		
+		try {
+			rows = tc.getAllStudentCourses().size();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		
+		assert(rows != null);
+		
+		Company company = new Company();
+		company.setName("TEST");
+		company.setAddress("TEST");
+		
+		Student student = new Student();
+		student.setFirstName("TEST");
+		student.setLastName("TEST");
+		student.setMiddleName("TEST");
+		
+		try {
+			tc.storeCompany(company);
+			tc.storeStudent(student);
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		
+		Course course = new Course();
+		course.setCompanyId(company.getCompanyId());
+		course.setName("TEST");
+		
+		try {
+			tc.storeCourse(course);
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		
+		StudentCourse link = new StudentCourse();
+		link.setCourseId(course.getCourseId());
+		link.setStudentId(student.getStudentId());
+		
+		try {
+			tc.storeStudentCourse(link);
+		} catch (HibernateException e) {
+			assert(false);
+		} 
+				
+		try {
+			StudentCourse tmp = tc.loadStudentCourse(link.getLinkId());
+			assert(tmp != null);
+			assert(equals(tmp.getCourseId(), course.getCourseId()));
+			assert(equals(tmp.getStudentId(), student.getStudentId()));
+			tc.deleteStudentCourse(tmp);
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		
+		boolean wasExc = false;
+		
+		try {
+			tc.loadStudentCourse(link.getLinkId());
+		} catch (HibernateException e) {
+			wasExc = true;
+		}
+		
+		try {
+			tc.deleteCourse(course);
+			tc.deleteStudent(student);
+			tc.deleteCompany(company);
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		
+		assert(wasExc);		
+		assert(rows.equals(tc.getAllStudentCourses().size()));
+	}
+	
+	@DataProvider
+	public Object[][] studentCourseTestData() {
+		return new Object[][] {
+			new Object[] {},
+		};
+	}
   
 }
