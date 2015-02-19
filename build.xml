@@ -2,7 +2,7 @@
 
 <project name="webprac2014" basedir="." default="all">
 
-    <property name="db.driver" value="com.mysql.jdbc.Driver"/>
+	<property name="db.driver" value="com.mysql.jdbc.Driver"/>
 	<property name="db.url" value="jdbc:mysql://localhost:3306/?characterEncoding=UTF-8"/>
 	<property name="db.user" value="root"/>
 	<property name="db.pw" value="root"/>
@@ -91,6 +91,64 @@
 		</sql>
 	</target>
 
-	<target name="all" depends="createDB, createTables, populateDB, showDB, clearDB, deleteTables, deleteDB" />
-
+	
+	<property name="target" value="1.7" />
+	<property name="source" value="1.7" />
+	<property name="project.name" value="${ant.project.name}" />
+	<property name="project.web.dir" value="WebContent" />
+	<property name="project.src.dir" value="src" />
+	<property name="project.classes.dir" value="build/classes" />
+	<property name="project.lib.dir" value="${project.web.dir}/WEB-INF/lib" />
+	<property name="project.war" value="${project.name}.war" />
+	
+	<path id="classpath.lib">
+		<fileset dir="${project.lib.dir}" includes="*.jar" />
+	</path>
+	
+	<path id="project.classpath">
+		<pathelement location="${project.classes.dir}" />
+		<path refid="classpath.lib" />
+	</path>
+	
+	<target name="init">
+		<mkdir dir="${project.classes.dir}" />
+		<copy includeemptydirs="false" todir="${project.classes.dir}">
+			<fileset dir="src">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${project.classes.dir}" />
+		<delete dir="${project.war}" />
+	</target>
+	
+	<target depends="init" name="build">
+		<javac destdir="${project.classes.dir}" includeantruntime="false" source="${source}" target="${target}">
+			<src path="src" />
+			<classpath refid="project.classpath" />
+		</javac> 
+	</target>
+	
+	<target depends="build" name="package">
+		<war destfile="${project.war}" index="true" needxmlfile="fasle">
+			<classes dir="${project.classes.dir}" />
+			<lib dir="${project.lib.dir}" />
+			<fileset dir="${project.web.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</war>
+	</target>
+	
+	<taskdef resource="testngtasks" classpath="${project.lib.dir}/testng-5.11-jdk15.jar"/>
+	
+	<target depends="build" name="tests">
+		<testng classpathref="project.classpath" outputDir="reports/" verbose="2">
+			<classfileset dir="${project.classes.dir}" includes="**/*.class" />
+		</testng>
+	</target>
+	
+	<target name="all" depends="tests"/>
+	
 </project>
