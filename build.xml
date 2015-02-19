@@ -100,6 +100,7 @@
 	<property name="project.classes.dir" value="build/classes" />
 	<property name="project.lib.dir" value="${project.web.dir}/WEB-INF/lib" />
 	<property name="project.war" value="${project.name}.war" />
+	<property name="project.reports.dir" value="reports" />
 	
 	<path id="classpath.lib">
 		<fileset dir="${project.lib.dir}" includes="*.jar" />
@@ -122,6 +123,7 @@
 	<target name="clean">
 		<delete dir="${project.classes.dir}" />
 		<delete dir="${project.war}" />
+		<delete dir="${project.reports.dir}" />
 	</target>
 	
 	<target depends="init" name="build">
@@ -144,7 +146,7 @@
 	<taskdef resource="testngtasks" classpath="${project.lib.dir}/testng-5.11-jdk15.jar"/>
 	
 	<target depends="build" name="tests">
-		<testng classpathref="project.classpath" outputDir="reports/" verbose="2">
+		<testng classpathref="project.classpath" outputDir="${project.reports.dir}" verbose="2">
 			<classfileset dir="${project.classes.dir}" includes="**/*.class" />
 		</testng>
 	</target>
