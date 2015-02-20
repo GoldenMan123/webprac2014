@@ -2,6 +2,7 @@ package trainingcenter;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -281,8 +282,16 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 
 	@Override
 	public List<Student> getStudentByCourse(Integer courseId) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		Query query = session.createQuery("select student from Student student,"
+				+ "StudentCourse link where student.studentId ="
+				+ "link.studentId and link.courseId = "
+				+ courseId.toString());
+		@SuppressWarnings("unchecked")
+		List<Student> list = query.list();
+		session.getTransaction().commit();
+		return list;
 	}
 
 	@Override

@@ -1,5 +1,11 @@
 package trainingcenter;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.testng.annotations.Test;
 import org.testng.annotations.DataProvider;
@@ -293,6 +299,11 @@ public class DAOImplTest {
 		}
 		
 		if (exc) {
+			try {
+				tc.deleteCompany(company);
+			} catch (HibernateException e) {
+				assert(false);
+			} 
 			return;
 		}
 		
@@ -340,7 +351,7 @@ public class DAOImplTest {
 	
 	@Test(dataProvider = "studentCourseTestData", dependsOnMethods = { "studentTest", "courseTest" })
 	public void studentCourseTest() {	
-TrainingCenterDAO tc = new TrainingCenterDAOImpl();
+		TrainingCenterDAO tc = new TrainingCenterDAOImpl();
 		
 		Integer rows = null;
 		
@@ -420,6 +431,226 @@ TrainingCenterDAO tc = new TrainingCenterDAOImpl();
 	
 	@DataProvider
 	public Object[][] studentCourseTestData() {
+		return new Object[][] {
+			new Object[] {},
+		};
+	}
+	
+	private Date parseDate(String str) {
+		if (str == null) {
+			return null;
+		}
+		DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		Date result;
+		try {
+			result = df.parse(str);
+		} catch (ParseException e) {
+			return null;
+		}
+		return result;
+	}
+	
+	private Date parseTime(String str) {
+		if (str == null) {
+			return null;
+		}
+		DateFormat df = new SimpleDateFormat("HH:mm:ss");
+		Date result;
+		try {
+			result = df.parse(str);
+		} catch (ParseException e) {
+			return null;
+		}
+		return result;
+	}
+	
+	private boolean dateEquals(Date a, Date b) {
+		DateFormat format = new SimpleDateFormat("dd:MM:yyyy");
+		return equals(format.format(a), format.format(b));
+	}
+	
+	private boolean timeEquals(Date a, Date b) {
+		DateFormat format = new SimpleDateFormat("HH:mm:ss");
+		return equals(format.format(a), format.format(b));
+	}
+	
+	@Test(dataProvider = "lessonTestData", dependsOnMethods = { "teacherTest", "courseTest" })
+	public void lessonTest(String s1, String s2, String s3, String s4, Integer p, boolean exc) {	
+		TrainingCenterDAO tc = new TrainingCenterDAOImpl();
+		
+		Integer rows = null;
+		
+		try {
+			rows = tc.getAllLessons().size();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		
+		assert(rows != null);
+		
+		Company company = new Company();
+		company.setName("TEST");
+		company.setAddress("TEST");
+		
+		Teacher teacher = new Teacher();
+		teacher.setFirstName("TEST");
+		teacher.setLastName("TEST");
+		teacher.setMiddleName("TEST");
+		
+		try {
+			tc.storeCompany(company);
+			tc.storeTeacher(teacher);
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		
+		Course course = new Course();
+		course.setCompanyId(company.getCompanyId());
+		course.setName("TEST");
+		
+		try {
+			tc.storeCourse(course);
+		} catch (HibernateException e) {
+			assert(false);
+		}
+
+		Date d1 = parseDate(s1);
+		Date d2 = parseDate(s2);
+		Date d3 = parseTime(s3);
+		Date d4 = parseTime(s4);
+		
+		Lesson lesson = new Lesson();
+		lesson.setCourseId(course.getCourseId());
+		lesson.setTeacherId(teacher.getTeacherId());
+		lesson.setDate_start(d1);
+		lesson.setDate_end(d2);
+		lesson.setTime(d3);
+		lesson.setDuration(d4);
+		lesson.setPeriod(p);
+		
+		boolean wasExc = false;
+		
+		try {
+			tc.storeLesson(lesson);
+		} catch (HibernateException e) {
+			wasExc = true;
+		} 
+		
+		if (wasExc != exc) {
+			try {
+				tc.deleteCourse(course);
+				tc.deleteTeacher(teacher);
+				tc.deleteCompany(company);
+			} catch (HibernateException e) {
+				assert(false);
+			}
+			assert(false);
+		}
+		
+		if (exc) {
+			try {
+				tc.deleteCourse(course);
+				tc.deleteTeacher(teacher);
+				tc.deleteCompany(company);
+			} catch (HibernateException e) {
+				assert(false);
+			}
+			return;
+		}
+				
+		try {
+			Lesson tmp = tc.loadLesson(lesson.getLessonId());
+			assert(tmp != null);
+			assert(equals(tmp.getCourseId(), course.getCourseId()));
+			assert(equals(tmp.getTeacherId(), teacher.getTeacherId()));
+			assert(dateEquals(tmp.getDate_start(), d1));
+			assert(dateEquals(tmp.getDate_end(), d2));
+			assert(timeEquals(tmp.getTime(), d3));
+			assert(timeEquals(tmp.getDuration(), d4));
+			assert(equals(tmp.getPeriod(), p));
+			tmp.setDate_end(tmp.getDate_start());
+			tc.updateLesson(tmp);
+			assert(equals(tmp.getCourseId(), course.getCourseId()));
+			assert(equals(tmp.getTeacherId(), teacher.getTeacherId()));
+			assert(dateEquals(tmp.getDate_start(), d1));
+			assert(dateEquals(tmp.getDate_end(), d1));
+			assert(timeEquals(tmp.getTime(), d3));
+			assert(timeEquals(tmp.getDuration(), d4));
+			assert(equals(tmp.getPeriod(), p));
+			tc.deleteLesson(tmp);
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		
+		wasExc = false;	
+		
+		try {
+			tc.loadLesson(lesson.getLessonId());
+		} catch (HibernateException e) {
+			wasExc = true;
+		}
+		
+		try {
+			tc.deleteCourse(course);
+			tc.deleteTeacher(teacher);
+			tc.deleteCompany(company);
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		
+		assert(wasExc);		
+		assert(rows.equals(tc.getAllLessons().size()));
+	}
+
+	@DataProvider
+	public Object[][] lessonTestData() {
+		return new Object[][] {
+			new Object[] { "20.02.2014", "21.02.2014", "08:45:00", "01:30:00", 0, false },
+			new Object[] { "20.02.2014", "21.02.2014", null, "01:30:00", 2, true },
+			new Object[] { "20.02.2014", "21.02.2014", "08:45:00", null, 0, true },
+			new Object[] { "20.02.2014", null, "08:45:00", "01:30:00", 1, true },
+			new Object[] { null, "21.02.2014", "08:45:00", "01:30:00", 2, true },
+		};
+	}
+	
+	@Test(dataProvider = "studentByCourseTestData", dependsOnMethods = { "studentCourseTest" })
+	public void studentByCourseTest() {	
+		TrainingCenterDAO tc = new TrainingCenterDAOImpl();
+		
+		List<Course> courses = tc.getAllCourses();
+		List<StudentCourse> links = tc.getAllStudentCourses();
+		
+		for (Course course : courses) {
+			List<Student> sbc = tc.getStudentByCourse(course.getCourseId());
+			for (Student student : sbc) {
+				boolean ok = false;
+				for (StudentCourse link : links) {
+					if ((link.getCourseId() == course.getCourseId()) &&
+						(link.getStudentId() == student.getStudentId())) {
+						ok = true;
+						break;
+					}
+				}
+				assert(ok);
+			}
+			for (StudentCourse link : links) {
+				if (link.getCourseId() == course.getCourseId()) {
+					boolean ok = false;
+					for (Student student : sbc) {
+						if (student.getStudentId() == link.getStudentId()) {
+							ok = true;
+							break;
+						}
+					}
+					assert(ok);
+				}
+			}
+		}
+		
+	}
+	
+	@DataProvider
+	public Object[][] studentByCourseTestData() {
 		return new Object[][] {
 			new Object[] {},
 		};
