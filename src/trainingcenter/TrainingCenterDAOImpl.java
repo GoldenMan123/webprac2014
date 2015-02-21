@@ -389,7 +389,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		Session session = sessions.openSession();
 		session.beginTransaction();
 		Query query = session.createQuery("from Lesson lesson where"
-				+ "lesson.teacherId = " + teacherId.toString());
+				+ " lesson.teacherId = " + teacherId.toString());
 		session.getTransaction().commit();
 		@SuppressWarnings("unchecked")
 		List<Lesson> tmp_list = query.list();

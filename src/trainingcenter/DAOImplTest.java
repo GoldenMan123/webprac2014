@@ -860,5 +860,54 @@ public class DAOImplTest {
 			new Object[] { 0, 100 },
 		};
 	}
+	
+	@Test(dataProvider = "lessonsByTeacherTestData", dependsOnMethods = { "lessonTest", "teacherTest" })
+	public void lessonsByTeacherTestData(Integer week_begin, Integer week_end) {
+		TrainingCenterDAO tc = new TrainingCenterDAOImpl();
+		
+		List<Teacher> teachers = null;
+		try {
+			teachers = tc.getAllTeachers();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		assert(teachers != null);
+		
+		List<Lesson> lessons = null;
+		try {
+			lessons = tc.getAllLessons();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		assert(lessons != null);
+		
+		for (Teacher teacher : teachers) {
+			for (int i = week_begin.intValue(); i < week_end.intValue(); ++i) {
+				List<Lesson> lbt = null;
+				try {
+					lbt = tc.getLessonsByTeacher(teacher.getTeacherId(), new Integer(i));
+				} catch (HibernateException e) {
+					assert(false);
+				}
+				assert(lbt != null);
+				DateTime now = new DateTime(new Date()).plusWeeks(new Integer(i));
+				for (Lesson lesson : lbt) {
+					assert(lesson.getTeacherId() == teacher.getTeacherId());
+					DateTime lesson_start = new DateTime(lesson.getDate_start());
+					Date lesson_day = now.withDayOfWeek(lesson_start.getDayOfWeek()).toDate();
+					assert(compareDate(lesson.getDate_start(), lesson_day) &&
+						compareDate(lesson_day, lesson.getDate_end()));
+				}
+			}
+		}
+		
+	}
+	
+	@DataProvider
+	public Object[][] lessonsByTeacherTestData() {
+		return new Object[][] {
+			new Object[] { 0, 100 },
+		};
+	}
   
 }
