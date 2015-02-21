@@ -1,5 +1,7 @@
 package trainingcenter;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -7,6 +9,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
 
 public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 
@@ -288,9 +292,9 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 			+ "StudentCourse link where student.studentId ="
 			+ "link.studentId and link.courseId = "
 			+ courseId.toString());
+		session.getTransaction().commit();
 		@SuppressWarnings("unchecked")
 		List<Student> list = query.list();
-		session.getTransaction().commit();
 		return list;
 	}
 
@@ -301,9 +305,9 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		Query query = session.createQuery("select distinct teacher from Lesson lesson,"
 			+ "Teacher teacher where lesson.courseId = " + courseId.toString()
 			+ " and lesson.teacherId = teacher.teacherId");
+		session.getTransaction().commit();
 		@SuppressWarnings("unchecked")
 		List<Teacher> list = query.list();
-		session.getTransaction().commit();
 		return list;
 	}
 
@@ -313,22 +317,59 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		Query query = session.createQuery("from Lesson lesson where lesson.courseId = "
 			+ courseId.toString());
+		session.getTransaction().commit();
 		@SuppressWarnings("unchecked")
 		List<Lesson> list = query.list();
-		session.getTransaction().commit();
 		return list;
+	}
+	
+	private boolean compareDate(Date a, Date b) {
+		return DateTimeComparator.getDateOnlyInstance().compare(new DateTime(a), new DateTime(b)) <= 0;
 	}
 
 	@Override
 	public List<Lesson> getLessonsByStudent(Integer studentId, Integer weekId) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		Query query = session.createQuery("select distinct lesson from Lesson lesson,"
+				+ "StudentCourse link where link.studentId = " + studentId.toString()
+				+ " and link.courseId = lesson.courseId");
+		session.getTransaction().commit();
+		@SuppressWarnings("unchecked")
+		List<Lesson> tmp_list = query.list();
+		List<Lesson> list = new ArrayList<Lesson>();
+		DateTime now = new DateTime(new Date()).plusWeeks(weekId);
+		for (Lesson lesson : tmp_list) {
+			DateTime lesson_start = new DateTime(lesson.getDate_start());
+			Date lesson_day = now.withDayOfWeek(lesson_start.getDayOfWeek()).toDate();
+			if (compareDate(lesson.getDate_start(), lesson_day) &&
+				compareDate(lesson_day, lesson.getDate_end())) {
+				list.add(lesson);
+			}
+		}
+		return list;
 	}
 
 	@Override
 	public List<Lesson> getLessonsByTeacher(Integer teacherId, Integer weekId) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		Query query = session.createQuery("from Lesson lesson where"
+				+ "lesson.teacherId = " + teacherId.toString());
+		session.getTransaction().commit();
+		@SuppressWarnings("unchecked")
+		List<Lesson> tmp_list = query.list();
+		List<Lesson> list = new ArrayList<Lesson>();
+		DateTime now = new DateTime(new Date()).plusWeeks(weekId);
+		for (Lesson lesson : tmp_list) {
+			DateTime lesson_start = new DateTime(lesson.getDate_start());
+			Date lesson_day = now.withDayOfWeek(lesson_start.getDayOfWeek()).toDate();
+			if (compareDate(lesson.getDate_start(), lesson_day) &&
+				compareDate(lesson_day, lesson.getDate_end())) {
+				list.add(lesson);
+			}
+		}
+		return list;
 	}
 
 }
