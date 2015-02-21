@@ -617,11 +617,30 @@ public class DAOImplTest {
 	public void studentByCourseTest() {	
 		TrainingCenterDAO tc = new TrainingCenterDAOImpl();
 		
-		List<Course> courses = tc.getAllCourses();
-		List<StudentCourse> links = tc.getAllStudentCourses();
+		List<Course> courses = null;
+		try {
+			courses = tc.getAllCourses();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		assert(courses != null);
+		
+		List<StudentCourse> links = null;
+		try {
+			links = tc.getAllStudentCourses();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		assert(links != null);
 		
 		for (Course course : courses) {
-			List<Student> sbc = tc.getStudentByCourse(course.getCourseId());
+			List<Student> sbc = null; 
+			try {
+				sbc = tc.getStudentByCourse(course.getCourseId());
+			} catch (HibernateException e) {
+				assert(false);
+			}
+			assert(sbc != null);
 			for (Student student : sbc) {
 				boolean ok = false;
 				for (StudentCourse link : links) {
@@ -651,6 +670,121 @@ public class DAOImplTest {
 	
 	@DataProvider
 	public Object[][] studentByCourseTestData() {
+		return new Object[][] {
+			new Object[] {},
+		};
+	}
+	
+	@Test(dataProvider = "teacherByCourseTestData", dependsOnMethods = { "courseTest", "lessonTest" })
+	public void teacherByCourseTest() {
+		TrainingCenterDAO tc = new TrainingCenterDAOImpl();
+		
+		List<Course> courses = null;
+		try {
+			courses = tc.getAllCourses();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		assert(courses != null);
+		
+		List<Lesson> lessons = null;
+		try {
+			lessons = tc.getAllLessons();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		assert(lessons != null);
+		
+		for (Course course : courses) {
+			List<Teacher> tbc = null; 
+			try {
+				tbc = tc.getTeacherByCourse(course.getCourseId());
+			} catch (HibernateException e) {
+				assert(false);
+			}
+			assert(tbc != null);
+			for (Teacher teacher : tbc) {
+				boolean ok = false;
+				for (Lesson lesson : lessons) {
+					if ((lesson.getCourseId() == course.getCourseId()) &&
+						lesson.getTeacherId() == teacher.getTeacherId()) {
+						ok = true;
+						break;
+					}
+				}
+				assert(ok);
+			}
+			for (Lesson lesson : lessons) {
+				if (lesson.getCourseId() == course.getCourseId()) {
+					boolean ok = false;
+					for (Teacher teacher : tbc) {
+						if (lesson.getTeacherId() == teacher.getTeacherId()) {
+							ok = true;
+							break;
+						}
+					}
+					assert(ok);
+				}
+			}
+		}
+		
+	}
+	
+	@DataProvider
+	public Object[][] teacherByCourseTestData() {
+		return new Object[][] {
+			new Object[] {},
+		};
+	}
+	
+	@Test(dataProvider = "lessonsByCourseTestData", dependsOnMethods = { "courseTest", "lessonTest" })
+	public void lessonsByCourseTest() {
+		TrainingCenterDAO tc = new TrainingCenterDAOImpl();
+		
+		List<Course> courses = null;
+		try {
+			courses = tc.getAllCourses();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		assert(courses != null);
+		
+		List<Lesson> lessons = null;
+		try {
+			lessons = tc.getAllLessons();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		assert(lessons != null);
+		
+		for (Course course : courses) {		
+			List<Lesson> lbc = null;
+			try {
+				lbc = tc.getLessonsByCourse(course.getCourseId());
+			} catch (HibernateException e) {
+				assert(false);
+			}
+			assert(lessons != null);
+			for (Lesson lesson : lbc) {
+				assert(lesson.getCourseId() == course.getCourseId());
+			}
+			for (Lesson lesson1 : lessons) {
+				if (lesson1.getCourseId() == course.getCourseId()) {
+					boolean ok = false;
+					for (Lesson lesson2 : lbc) {
+						if (lesson2.getLessonId() == lesson1.getLessonId()) {
+							ok = true;
+							break;
+						}
+					}
+					assert(ok);
+				}
+			}
+		}
+	}
+	
+	@DataProvider
+	public Object[][] lessonsByCourseTestData() {
 		return new Object[][] {
 			new Object[] {},
 		};

@@ -284,10 +284,10 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 	public List<Student> getStudentByCourse(Integer courseId) {
 		Session session = sessions.openSession();
 		session.beginTransaction();
-		Query query = session.createQuery("select student from Student student,"
-				+ "StudentCourse link where student.studentId ="
-				+ "link.studentId and link.courseId = "
-				+ courseId.toString());
+		Query query = session.createQuery("select distinct student from Student student,"
+			+ "StudentCourse link where student.studentId ="
+			+ "link.studentId and link.courseId = "
+			+ courseId.toString());
 		@SuppressWarnings("unchecked")
 		List<Student> list = query.list();
 		session.getTransaction().commit();
@@ -296,14 +296,27 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 
 	@Override
 	public List<Teacher> getTeacherByCourse(Integer courseId) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		Query query = session.createQuery("select distinct teacher from Lesson lesson,"
+			+ "Teacher teacher where lesson.courseId = " + courseId.toString()
+			+ " and lesson.teacherId = teacher.teacherId");
+		@SuppressWarnings("unchecked")
+		List<Teacher> list = query.list();
+		session.getTransaction().commit();
+		return list;
 	}
 
 	@Override
 	public List<Lesson> getLessonsByCourse(Integer courseId) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		Query query = session.createQuery("from Lesson lesson where lesson.courseId = "
+			+ courseId.toString());
+		@SuppressWarnings("unchecked")
+		List<Lesson> list = query.list();
+		session.getTransaction().commit();
+		return list;
 	}
 
 	@Override
