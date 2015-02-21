@@ -33,6 +33,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		@SuppressWarnings("unchecked")
 		List<Course> list = session.createCriteria(Course.class).list();
 		session.getTransaction().commit();
+		session.close();
 		return list;
 	}
 
@@ -42,6 +43,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		Course course = (Course) session.load(Course.class, courseId);
 		session.getTransaction().commit();
+		session.close();
 		return course;
 	}
 
@@ -51,6 +53,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.save(course);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -59,6 +62,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.delete(course);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -67,6 +71,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.update(course);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -76,6 +81,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		@SuppressWarnings("unchecked")
 		List<Company> list = session.createCriteria(Company.class).list();
 		session.getTransaction().commit();
+		session.close();
 		return list;
 	}
 
@@ -85,6 +91,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		Company company = (Company) session.load(Company.class, companyId);
 		session.getTransaction().commit();
+		session.close();
 		return company;
 	}
 
@@ -94,6 +101,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.save(company);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -102,6 +110,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.delete(company);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -110,6 +119,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.update(company);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -119,6 +129,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		@SuppressWarnings("unchecked")
 		List<Lesson> list = session.createCriteria(Lesson.class).list();
 		session.getTransaction().commit();
+		session.close();
 		return list;
 	}
 
@@ -128,6 +139,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		Lesson lesson = (Lesson) session.load(Lesson.class, lessonId);
 		session.getTransaction().commit();
+		session.close();
 		return lesson;
 	}
 
@@ -137,6 +149,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.save(lesson);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -145,6 +158,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.delete(lesson);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -153,6 +167,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.update(lesson);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -162,6 +177,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		@SuppressWarnings("unchecked")
 		List<Student> list = session.createCriteria(Student.class).list();
 		session.getTransaction().commit();
+		session.close();
 		return list;
 	}
 
@@ -171,6 +187,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		Student student = (Student) session.load(Student.class, studentId);
 		session.getTransaction().commit();
+		session.close();
 		return student;
 	}
 
@@ -180,6 +197,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.save(student);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -188,6 +206,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.delete(student);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -196,6 +215,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.update(student);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -205,6 +225,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		@SuppressWarnings("unchecked")
 		List<Teacher> list = session.createCriteria(Teacher.class).list();
 		session.getTransaction().commit();
+		session.close();
 		return list;
 	}
 
@@ -214,6 +235,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		Teacher teacher = (Teacher) session.load(Teacher.class, teacherId);
 		session.getTransaction().commit();
+		session.close();
 		return teacher;
 	}
 
@@ -223,6 +245,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.save(teacher);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -231,6 +254,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.delete(teacher);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -239,6 +263,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.update(teacher);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -248,6 +273,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		@SuppressWarnings("unchecked")
 		List<StudentCourse> list = session.createCriteria(StudentCourse.class).list();
 		session.getTransaction().commit();
+		session.close();
 		return list;
 	}
 
@@ -257,6 +283,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		StudentCourse link = (StudentCourse) session.load(StudentCourse.class, linkId);
 		session.getTransaction().commit();
+		session.close();
 		return link;
 	}
 
@@ -266,6 +293,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.save(link);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -274,6 +302,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.delete(link);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -282,6 +311,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.beginTransaction();
 		session.update(link);
 		session.getTransaction().commit();
+		session.close();
 	}
 
 	@Override
@@ -295,6 +325,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.getTransaction().commit();
 		@SuppressWarnings("unchecked")
 		List<Student> list = query.list();
+		session.close();
 		return list;
 	}
 
@@ -308,6 +339,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.getTransaction().commit();
 		@SuppressWarnings("unchecked")
 		List<Teacher> list = query.list();
+		session.close();
 		return list;
 	}
 
@@ -320,6 +352,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.getTransaction().commit();
 		@SuppressWarnings("unchecked")
 		List<Lesson> list = query.list();
+		session.close();
 		return list;
 	}
 	
@@ -347,6 +380,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 				list.add(lesson);
 			}
 		}
+		session.close();
 		return list;
 	}
 
@@ -369,6 +403,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 				list.add(lesson);
 			}
 		}
+		session.close();
 		return list;
 	}
 
