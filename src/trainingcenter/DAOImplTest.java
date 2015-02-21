@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
 import org.testng.annotations.Test;
 import org.testng.annotations.DataProvider;
 
@@ -787,6 +789,75 @@ public class DAOImplTest {
 	public Object[][] lessonsByCourseTestData() {
 		return new Object[][] {
 			new Object[] {},
+		};
+	}
+	
+	private boolean compareDate(Date a, Date b) {
+		return DateTimeComparator.getDateOnlyInstance().compare(new DateTime(a), new DateTime(b)) <= 0;
+	}	
+	
+	@Test(dataProvider = "lessonsByStudentTestData", dependsOnMethods = { "lessonTest", "studentCourseTest" })
+	public void lessonsByStudentTest(Integer week_begin, Integer week_end) {
+		TrainingCenterDAO tc = new TrainingCenterDAOImpl();
+		
+		List<Student> students = null;
+		try {
+			students = tc.getAllStudents();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		assert(students != null);
+		
+		List<Lesson> lessons = null;
+		try {
+			lessons = tc.getAllLessons();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		assert(lessons != null);
+		
+		List<StudentCourse> links = null;
+		try {
+			links = tc.getAllStudentCourses();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		assert(links != null);
+		
+		for (Student student : students) {
+			for (int i = week_begin.intValue(); i < week_end.intValue(); ++i) {
+				List<Lesson> lbs = null;
+				try {
+					lbs = tc.getLessonsByStudent(student.getStudentId(), new Integer(i));
+				} catch (HibernateException e) {
+					assert(false);
+				}
+				assert(lbs != null);
+				DateTime now = new DateTime(new Date()).plusWeeks(new Integer(i));
+				for (Lesson lesson : lbs) {
+					boolean ok = false;
+					for (StudentCourse link : links) {
+						if ((link.getStudentId() == student.getStudentId()) &&
+							(link.getCourseId()) == lesson.getCourseId()) {
+							ok = true;
+							break;
+						}
+					}
+					assert(ok);
+					DateTime lesson_start = new DateTime(lesson.getDate_start());
+					Date lesson_day = now.withDayOfWeek(lesson_start.getDayOfWeek()).toDate();
+					assert(compareDate(lesson.getDate_start(), lesson_day) &&
+						compareDate(lesson_day, lesson.getDate_end()));
+				}
+			}
+		}
+		
+	}
+	
+	@DataProvider
+	public Object[][] lessonsByStudentTestData() {
+		return new Object[][] {
+			new Object[] { 0, 100 },
 		};
 	}
   
