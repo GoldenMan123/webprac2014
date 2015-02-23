@@ -217,8 +217,10 @@ public class TrainingCenterController {
             model.addAttribute("company", company);
             List<Student> students = dao.getStudentByCourse(id);
             List<Teacher> teachers = dao.getTeacherByCourse(id);
+            List<Lesson> lessons = dao.getLessonsByCourse(id);
             model.addAttribute("students", students);
             model.addAttribute("teachers", teachers);
+            model.addAttribute("lessons", lessons);
         } catch (HibernateException e) {
 			return "error";
 		}
@@ -287,5 +289,21 @@ public class TrainingCenterController {
 		}
         return "redirect:course?id=" + courseId;
     }
+
+    @RequestMapping(value = "/lesson_del", method = RequestMethod.GET)
+	public String delLesson(@RequestParam(value="id", required=true) Integer id, Model model) {
+        Integer courseId = null;
+        try {
+            Lesson lesson = dao.loadLesson(id);
+            courseId = lesson.getCourseId();
+            dao.deleteLesson(lesson);
+        } catch (HibernateException e) {
+			return "error";
+		}
+		if (courseId == null) {
+            return "error";
+		}
+		return "redirect:course?id=" + courseId.toString();
+	}
 
 }

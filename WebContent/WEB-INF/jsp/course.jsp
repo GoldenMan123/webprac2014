@@ -63,6 +63,32 @@ ${teacher.lastName} ${teacher.firstName} ${teacher.middleName}
 </div>
 <div class="acc3">
 
+<c:forEach items="${lessons}" var="lesson">
+<div class="button_wrap">
+<a href="lesson?id=${lesson.lessonId}">
+<div class="student_entry_short_left" id="student_entry_shl_les_${lesson.lessonId}">
+<fmt:formatDate value="${lesson.time}" var="time_str" pattern="HH:mm" />
+<fmt:formatDate value="${lesson.date_start}" var="date_str_1" pattern="dd.MM.yyyy" />
+<fmt:formatDate value="${lesson.date_end}" var="date_str_2" pattern="dd.MM.yyyy" />
+${time_str} (${date_str_1} &mdash; ${date_str_2})
+</div>
+</a>
+<a href="lesson_del?id=${lesson.lessonId}">
+<div class="student_entry_short_right" id="student_entry_shr_les_${lesson.lessonId}">
+Удалить
+</div>
+</a>
+</div>
+</c:forEach>
+
+<div class="mb"></div>
+
+<a href="lesson_add?course_id=${course.courseId}">
+<div class="student_entry" id="student_entry_les_add">
+Добавить занятие
+</div>
+</a>
+
 </div>
 </div>
 
