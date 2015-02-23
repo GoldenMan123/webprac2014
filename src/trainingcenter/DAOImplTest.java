@@ -909,5 +909,59 @@ public class DAOImplTest {
 			new Object[] { 0, 100 },
 		};
 	}
+	
+	@Test(dataProvider = "coursesByCompanyTestData", dependsOnMethods = { "courseTest", "companyTest" })
+	public void coursesByCompanyTest() {
+		TrainingCenterDAO tc = new TrainingCenterDAOImpl();
+		
+		List<Course> courses = null;
+		try {
+			courses = tc.getAllCourses();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		assert(courses != null);
+		
+		List<Company> companies = null;
+		try {
+			companies = tc.getAllCompanies();
+		} catch (HibernateException e) {
+			assert(false);
+		}
+		assert(companies != null);
+		
+		for (Company company : companies) {
+			List<Course> cbc = null; 
+			try {
+				cbc = tc.getCoursesByCompany(company.getCompanyId());
+			} catch (HibernateException e) {
+				assert(false);
+			}
+			assert(cbc != null);
+			for (Course course : cbc) {
+				assert(course.getCompanyId() == company.getCompanyId());
+			}
+			for (Course course1 : courses) {
+				if (course1.getCompanyId() == company.getCompanyId()) {
+					boolean ok = false;
+					for (Course course2 : cbc) {
+						if (course1.getCompanyId() == course2.getCompanyId()) {
+							ok = true;
+							break;
+						}
+					}
+					assert(ok);
+				}
+			}
+		}
+		
+	}
+	
+	@DataProvider
+	public Object[][] coursesByCompanyTestData() {
+		return new Object[][] {
+			new Object[] {},
+		};
+	}
   
 }

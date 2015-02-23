@@ -406,5 +406,18 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.close();
 		return list;
 	}
+	
+	@Override
+	public List<Course> getCoursesByCompany(Integer companyId) {
+		Session session = sessions.openSession();
+		session.beginTransaction();
+		Query query = session.createQuery("from Course course"
+			+ " where course.companyId = " + companyId.toString());
+		session.getTransaction().commit();
+		@SuppressWarnings("unchecked")
+		List<Course> list = query.list();
+		session.close();
+		return list;
+	}
 
 }

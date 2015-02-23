@@ -76,4 +76,6 @@ public interface TrainingCenterDAO {
 	
 	public List<Lesson> getLessonsByTeacher(Integer teacherId, Integer weekId) throws HibernateException;
 
+	public List<Course> getCoursesByCompany(Integer companyId) throws HibernateException;
+	
 }
