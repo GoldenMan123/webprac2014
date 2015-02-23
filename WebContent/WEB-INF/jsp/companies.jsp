@@ -15,7 +15,7 @@ ${company.name}
 </c:forEach>
 
 <a href="company_add">
-<div class="student_entry" id="student_entry_add">
+<div class="main_entry" id="main_entry_add">
 Добавить компанию
 </div>
 </a>

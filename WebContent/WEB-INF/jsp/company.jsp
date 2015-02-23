@@ -21,7 +21,7 @@ ${course.name}
 </a>
 
 <a href="company_del?id=${company.companyId}">
-<div class="student_entry" id="student_entry_del_${comapny.companyId}">
+<div class="main_entry" id="main_entry_del_${comapny.companyId}">
 Удалить компанию
 </div>
 </a>

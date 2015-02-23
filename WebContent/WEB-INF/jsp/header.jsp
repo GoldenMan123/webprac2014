@@ -6,6 +6,30 @@
     <title>Учебный Центр "Ромашка"</title>
     <link rel="stylesheet" href="resources/styles/main.css">
     <link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon">
+    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+	
+	    $(".acc1 .acc2").eq(2).addClass("active");
+	    $(".acc1 .acc3").eq(2).show();
+
+	    $(".acc1 .acc2").click(function(){
+		    $(this).next(".acc3").slideToggle("slow")
+		    .siblings(".acc3:visible").slideUp("slow");
+		    $(this).toggleClass("active");
+		    $(this).siblings(".acc2").removeClass("active");
+	    });
+
+    });
+    </script>
+    <style type="text/css">
+    .acc2 {
+        cursor: pointer;    
+    }
+    .acc1 .acc3 {
+	    display: none;
+    }
+    </style>
 </head>
 <body>
 

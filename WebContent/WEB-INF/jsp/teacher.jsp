@@ -7,7 +7,7 @@ ${teacher.lastName} ${teacher.firstName} ${teacher.middleName}
 </div>
 
 <a href="teacher_del?id=${teacher.teacherId}">
-<div class="student_entry" id="student_entry_del_${teacher.teacherId}">
+<div class="main_entry" id="main_entry_del_${teacher.teacherId}">
 Удалить педагога
 </div>
 </a>

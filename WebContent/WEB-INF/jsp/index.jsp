@@ -34,5 +34,6 @@
 
 </div>
 
+<div class="mb"></div>
 
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>

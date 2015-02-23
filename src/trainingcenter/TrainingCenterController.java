@@ -208,4 +208,84 @@ public class TrainingCenterController {
         return "redirect:company?id=" + companyId.toString();
 	}
 
+	@RequestMapping(value = "/course", method = RequestMethod.GET)
+	public String getCourse(@RequestParam(value="id", required=true) Integer id, Model model) {
+        try {
+            Course course = dao.loadCourse(id);
+            model.addAttribute("course", course);
+            Company company = dao.loadCompany(course.getCompanyId());
+            model.addAttribute("company", company);
+            List<Student> students = dao.getStudentByCourse(id);
+            List<Teacher> teachers = dao.getTeacherByCourse(id);
+            model.addAttribute("students", students);
+            model.addAttribute("teachers", teachers);
+        } catch (HibernateException e) {
+			return "error";
+		}
+		return "course";
+	}
+
+	@RequestMapping(value = "/course_del", method = RequestMethod.GET)
+	public String delCourse(@RequestParam(value="id", required=true) Integer id, Model model) {
+        try {
+            Course course = dao.loadCourse(id);
+            dao.deleteCourse(course);
+        } catch (HibernateException e) {
+			return "error";
+		}
+		return "redirect:courses";
+	}
+
+	@RequestMapping(value = "/student_course_del", method = RequestMethod.GET)
+    public String delCourse(@RequestParam(value="course_id", required=true) Integer courseId,
+        @RequestParam(value="student_id", required=true) Integer studentId, Model model) {
+        try {
+            List<StudentCourse> links = dao.getAllStudentCourses();
+            for (StudentCourse link : links) {
+                if ((link.getStudentId() == studentId) &&
+                    (link.getCourseId() == courseId)) {
+                    dao.deleteStudentCourse(link);
+                    break;
+                }
+            }
+        } catch (HibernateException e) {
+			return "error";
+		}
+        return "redirect:course?id=" + courseId.toString();
+    }
+
+    @RequestMapping(value = "/student_course_add", method = RequestMethod.GET)
+    public String getStudentCourseAdd(@RequestParam(value="id", required=true) Integer id, Model model) {
+        try {
+            Course course = dao.loadCourse(id);
+            List<Student> students = dao.getAllStudents();
+            model.addAttribute("course", course);
+            model.addAttribute("students", students);
+        } catch (HibernateException e) {
+			return "error";
+		}
+        return "student_course_add";
+    }
+
+    @RequestMapping(value = "/student_course_add_post", method = RequestMethod.GET)
+    public String getStudentCourseAddPost(@RequestParam(value="course_id", required=true) Integer courseId,
+        @RequestParam(value="student_id", required=true) Integer studentId, Model model) {
+        try {
+            List<StudentCourse> links = dao.getAllStudentCourses();
+            for (StudentCourse link : links) {
+                if ((link.getStudentId() == studentId) &&
+                    (link.getCourseId() == courseId)) {
+                    return "redirect:course?id=" + courseId;
+                }
+            }
+            StudentCourse link = new StudentCourse();
+            link.setStudentId(studentId);
+            link.setCourseId(courseId);
+            dao.storeStudentCourse(link);
+        } catch (HibernateException e) {
+			return "error";
+		}
+        return "redirect:course?id=" + courseId;
+    }
+
 }

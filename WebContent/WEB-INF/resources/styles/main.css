@@ -10,6 +10,7 @@ a {
     margin-top: 16px;
     padding: 8px;
     width: 975px;
+    border: solid 3px #000044;
     border-radius: 16px;
     background: #88CCFF;
     font-size: 48px;
@@ -24,7 +25,7 @@ a {
 }
 
 .button_wrap {
-    width: 875px;
+    width: 920px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -33,7 +34,8 @@ a {
     margin-top: 16px;
     float: left;
     padding: 8px;
-    width: 400px;
+    width: 430px;
+    border: solid 3px #000044;
     border-radius: 16px;
     background: #88CCFF;
     font-size: 48px;
@@ -52,7 +54,8 @@ a {
     margin-top: 16px;
     float: right;
     padding: 8px;
-    width: 435px;
+    width: 430px;
+    border: solid 3px #000044;
     border-radius: 16px;
     background: #88CCFF;
     font-size: 48px;
@@ -71,6 +74,7 @@ a {
     margin-top: 16px;
     padding: 8px;
     width: 875px;
+    border: solid 3px #000044;
     border-radius: 16px;
     background: #88CCFF;
     font-size: 44px;
@@ -95,6 +99,64 @@ a {
 
 .student_entry:hover {
     background: #88CC00;
+}
+
+.main_entry {
+    margin-top: 16px;
+    padding: 8px;
+    width: 875px;
+    border: solid 3px #000044;
+    border-radius: 16px;
+    background: #88CCFF;
+    font-size: 40px;
+    text-align: center;
+    color: black;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main_entry:hover {
+    background: #88CC00;
+}
+
+.student_entry_short_left {
+    float: left;
+    margin-top: 16px;
+    padding: 8px;
+    width: 630px;
+    border-radius: 16px;
+    background: #88CCFF;
+    font-size: 40px;
+    text-align: center;
+    color: black;
+    margin-left: 20px;
+    margin-right: 0px;
+}
+
+.student_entry_short_left:hover {
+    background: #88CC00;
+}
+
+.student_entry_short_right {
+    float: right;
+    margin-top: 16px;
+    padding: 8px;
+    width: 200px;
+    border-radius: 16px;
+    background: #88CCFF;
+    font-size: 40px;
+    text-align: center;
+    color: black;
+    margin-left: 0px;
+    margin-right: 20px;
+}
+
+.student_entry_short_right:hover {
+    background: #88CC00;
+}
+
+.mb {
+    clear: both;
 }
 
 .fio_field {
@@ -128,7 +190,7 @@ a {
     font-size: 40px;
     text-align: center;
     color: black;
-    margin-left: 0px;
+    margin-left: 20px;
     margin-right: 0px;
     vertical-align: center;
 }
@@ -148,7 +210,7 @@ a {
     text-align: center;
     color: black;
     margin-left: 0px;
-    margin-right: 0px;
+    margin-right: 20px;
     vertical-align: center;
 }
 

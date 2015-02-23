@@ -15,7 +15,7 @@ ${teacher.lastName} ${teacher.firstName} ${teacher.middleName}
 </c:forEach>
 
 <a href="teacher_add">
-<div class="student_entry" id="student_entry_add">
+<div class="main_entry" id="main_entry_add">
 Добавить педагога
 </div>
 </a>
