@@ -172,6 +172,19 @@ a {
     margin-right: auto;
 }
 
+.fio_field_err {
+    margin-top: 16px;
+    padding: 8px;
+    width: 875px;
+    border-radius: 16px;
+    background: #FF0000;
+    font-size: 40px;
+    text-align: center;
+    color: black;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .fio_field input {
     font-size: 40px;
     padding: 4px;
@@ -180,7 +193,32 @@ a {
     text-align: center;
 }
 
+.fio_field select {
+    font-size: 40px;
+    padding: 4px;
+    width: 860px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.fio_field_err input {
+    font-size: 40px;
+    padding: 4px;
+    width: 860px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.fio_field_err select {
+    font-size: 40px;
+    padding: 4px;
+    width: 860px;
+    border-radius: 16px;
+    text-align: center;
+}
+
 .ok_button {
+    cursor: pointer;
     margin-top: 16px;
     float: left;
     padding: 8px;
@@ -200,6 +238,7 @@ a {
 }
 
 .cancel_button {
+    cursor: pointer;
     margin-top: 16px;
     float: right;
     padding: 8px;

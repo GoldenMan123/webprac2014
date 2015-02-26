@@ -30,6 +30,8 @@
 
 </div>
 
+<div class="mb"></div>
+
 </form:form>
 
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>

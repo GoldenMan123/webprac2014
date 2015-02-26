@@ -467,7 +467,7 @@ public class DAOImplTest {
 	}
 	
 	private boolean dateEquals(Date a, Date b) {
-		DateFormat format = new SimpleDateFormat("dd:MM:yyyy");
+		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 		return equals(format.format(a), format.format(b));
 	}
 	

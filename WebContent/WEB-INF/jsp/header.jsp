@@ -6,7 +6,8 @@
     <title>Учебный Центр "Ромашка"</title>
     <link rel="stylesheet" href="resources/styles/main.css">
     <link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon">
-    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+    <script type='text/javascript' src='resources/js/jquery.min.js'></script>
+    <script type='text/javascript' src='resources/js/form_validator.js'></script>
     <script type="text/javascript">
     $(document).ready(function(){
 	

@@ -1,5 +1,6 @@
 package trainingcenter;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -49,10 +50,17 @@ public class TrainingCenterController {
 	}
 
     @RequestMapping(value = "/student", method = RequestMethod.GET)
-    public String getStudent(@RequestParam(value="id", required=true) Integer id, Model model) {
+    public String getStudent(@RequestParam(value="id", required=true) Integer id,
+        @RequestParam(value="week_id", required=false) Integer week_id, Model model) {
+        if (week_id == null) {
+            week_id = 0;
+        }
         try {
             Student student = dao.loadStudent(id);
             model.addAttribute("student", student);
+            List<Lesson> lessons = dao.getLessonsByStudent(id, week_id);
+            model.addAttribute("lessons", lessons);
+            model.addAttribute("week_id", week_id);
         } catch (HibernateException e) {
 			return "error";
 		}
@@ -98,10 +106,17 @@ public class TrainingCenterController {
 	}
 
 	@RequestMapping(value = "/teacher", method = RequestMethod.GET)
-    public String getTeacher(@RequestParam(value="id", required=true) Integer id, Model model) {
+    public String getTeacher(@RequestParam(value="id", required=true) Integer id,
+        @RequestParam(value="week_id", required=false) Integer week_id, Model model) {
+        if (week_id == null) {
+            week_id = 0;
+        }
         try {
             Teacher teacher = dao.loadTeacher(id);
             model.addAttribute("teacher", teacher);
+            List<Lesson> lessons = dao.getLessonsByTeacher(id, week_id);
+            model.addAttribute("lessons", lessons);
+            model.addAttribute("week_id", week_id);
         } catch (HibernateException e) {
 			return "error";
 		}
@@ -304,6 +319,54 @@ public class TrainingCenterController {
             return "error";
 		}
 		return "redirect:course?id=" + courseId.toString();
+	}
+
+	@RequestMapping(value = "/lesson", method = RequestMethod.GET)
+	public String getLesson(@RequestParam(value="id", required=true) Integer id, Model model) {
+        try {
+            Lesson lesson = dao.loadLesson(id);
+            Course course = dao.loadCourse(lesson.getCourseId());
+            Company company = dao.loadCompany(course.getCompanyId());
+            Teacher teacher = dao.loadTeacher(lesson.getTeacherId());
+            model.addAttribute("lesson", lesson);
+            model.addAttribute("course", course);
+            model.addAttribute("company", company);
+            model.addAttribute("teacher", teacher);
+        } catch (HibernateException e) {
+			return "error";
+		}
+		return "lesson";
+	}
+
+	@RequestMapping(value = "/lesson_add", method = RequestMethod.GET)
+	public String getLessonAdd(@RequestParam(value="course_id", required=true) Integer course_id, Model model) {
+        try {
+            Course course = dao.loadCourse(course_id);
+            List<Teacher> teachers = dao.getAllTeachers();
+            model.addAttribute("course", course);
+            model.addAttribute("teachers", teachers);
+            model.addAttribute("lessonAttribute", new LessonWrap());
+        } catch (HibernateException e) {
+            return "error";
+        }
+        return "lesson_add";
+	}
+
+    @RequestMapping(value = "/lesson_add", method = RequestMethod.POST)
+	public String getLessonAdd(@ModelAttribute("lessonAttribute") LessonWrap lesson_w, Model model) {
+        Integer courseId = null;
+        try {
+            courseId = lesson_w.getCourseId();
+			dao.storeLesson(lesson_w.toLesson());
+		} catch (HibernateException e) {
+			return "error";
+		} catch (ParseException e) {
+			return "error";
+		}
+		if (courseId == null) {
+            return "error";
+		}
+        return "redirect:course?id=" + courseId.toString();
 	}
 
 }
