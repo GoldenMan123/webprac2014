@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://hp:8080/" />
+<title>test_selenium</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">test_selenium</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/TrainingCenter/main/index</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=button_main_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=main_entry_add</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=lastName</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=firstName</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=middleName</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.header</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=button_main_2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=main_entry_add</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=lastName</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=firstName</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=middleName</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.header</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=button_main_3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.main_entry</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_add</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_11</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_les_add</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=teacherId</td>
+	<td>label=Гуров Сергей Исаевич</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=time</td>
+	<td>12:11</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=duration</td>
+	<td>03:46</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=period</td>
+	<td>label=Два раза в неделю</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=date_start</td>
+	<td>27.02.2015</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=date_end</td>
+	<td>30.07.2015</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.header</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=button_main_4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=main_entry_add</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=name</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=address</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_add</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=name</td>
+	<td>TestCourse</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_9</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.main_entry</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_add</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.main_entry</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_add</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.main_entry</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_add</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_10</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.main_entry</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_add</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_11</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[3]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[5]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_les_add</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=teacherId</td>
+	<td>label=Test Test Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=time</td>
+	<td>13:48</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=duration</td>
+	<td>01:34</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=period</td>
+	<td>label=Один раз</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=date_start</td>
+	<td>27.02.2015</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=date_end</td>
+	<td>27.02.2015</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[3]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[5]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_les_add</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=time</td>
+	<td>11329821489</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=duration</td>
+	<td>23049832094</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=date_start</td>
+	<td>209348209</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=date_end</td>
+	<td>1204982104</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=time</td>
+	<td>11:43</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=duration</td>
+	<td>12:34</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=duration</td>
+	<td>02:34</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=date_start</td>
+	<td>27.02.2015</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=date_end</td>
+	<td>27.02.2016</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=date_end</td>
+	<td>27.07.2015</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.ok_button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.header</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=button_main_2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_11</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=main_entry_del_11</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.header</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=button_main_4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_9</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.main_entry</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_shl_stu_11</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=main_entry_del_11</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.header</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=button_main_4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=student_entry_4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=main_entry_del_</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.header</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=button_main_3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.header</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=button_main_1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.header</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=button_main_2</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
