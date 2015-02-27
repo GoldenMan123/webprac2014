@@ -1,5 +1,8 @@
 package trainingcenter;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +14,11 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 
@@ -359,9 +367,13 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 	private boolean compareDate(Date a, Date b) {
 		return DateTimeComparator.getDateOnlyInstance().compare(new DateTime(a), new DateTime(b)) <= 0;
 	}
+	
+	private boolean isEqualDate(Date a, Date b) {
+		return DateTimeComparator.getDateOnlyInstance().compare(new DateTime(a), new DateTime(b)) == 0;
+	}
 
 	@Override
-	public List<Lesson> getLessonsByStudent(Integer studentId, Integer weekId) {
+	public List<Lesson2> getLessonsByStudent(Integer studentId, Integer weekId) throws ParseException {
 		Session session = sessions.openSession();
 		session.beginTransaction();
 		Query query = session.createQuery("select distinct lesson from Lesson lesson,"
@@ -370,14 +382,44 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.getTransaction().commit();
 		@SuppressWarnings("unchecked")
 		List<Lesson> tmp_list = query.list();
-		List<Lesson> list = new ArrayList<Lesson>();
+		List<Lesson2> list = new ArrayList<Lesson2>();
 		DateTime now = new DateTime(new Date()).plusWeeks(weekId);
 		for (Lesson lesson : tmp_list) {
 			DateTime lesson_start = new DateTime(lesson.getDate_start());
 			Date lesson_day = now.withDayOfWeek(lesson_start.getDayOfWeek()).toDate();
+			Integer dd = Days.daysBetween(new LocalDate(lesson.getDate_start()), 
+						 new LocalDate(lesson_day)).getDays();
 			if (compareDate(lesson.getDate_start(), lesson_day) &&
-				compareDate(lesson_day, lesson.getDate_end())) {
-				list.add(lesson);
+					compareDate(lesson_day, lesson.getDate_end())) {
+				Lesson2 lesson2 = new Lesson2();
+				lesson2.setCourseName(loadCourse(lesson.getCourseId()).getName());
+				lesson2.setDate(lesson_day);
+				lesson2.setLessonId(lesson.getLessonId());
+				lesson2.setTime_start(lesson.getTime());
+				Period period = new Period(new DateTime(lesson.getTime()).withTimeAtStartOfDay(),
+						new DateTime(lesson.getTime()));
+				Period duration = new Period(new DateTime(lesson.getDuration()).withTimeAtStartOfDay(),
+						new DateTime(lesson.getDuration()));
+				Period period2 = period.toStandardDuration().plus(duration.toStandardDuration()).toPeriod();
+				PeriodFormatter pf = new PeriodFormatterBuilder().minimumPrintedDigits(2)
+							.printZeroAlways().appendHours().appendLiteral(":")
+							.appendMinutes().toFormatter();
+				String pf2_str = pf.print(period2);
+				DateFormat time_f = new SimpleDateFormat("HH:mm");
+				lesson2.setTime_end(time_f.parse(pf2_str));
+				if (lesson.getPeriod() == 1) {
+					if (dd % 7 == 0) {
+						list.add(lesson2);
+					}
+				} else if (lesson.getPeriod() == 2) {
+					if (dd % 14 == 0) {
+						list.add(lesson2);
+					}
+				} else {
+					if (isEqualDate(lesson.getDate_start(), lesson_day)) {
+						list.add(lesson2);
+					}
+				}
 			}
 		}
 		session.close();
@@ -385,7 +427,7 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 	}
 
 	@Override
-	public List<Lesson> getLessonsByTeacher(Integer teacherId, Integer weekId) {
+	public List<Lesson2> getLessonsByTeacher(Integer teacherId, Integer weekId) throws ParseException {
 		Session session = sessions.openSession();
 		session.beginTransaction();
 		Query query = session.createQuery("from Lesson lesson where"
@@ -393,14 +435,44 @@ public class TrainingCenterDAOImpl implements TrainingCenterDAO {
 		session.getTransaction().commit();
 		@SuppressWarnings("unchecked")
 		List<Lesson> tmp_list = query.list();
-		List<Lesson> list = new ArrayList<Lesson>();
+		List<Lesson2> list = new ArrayList<Lesson2>();
 		DateTime now = new DateTime(new Date()).plusWeeks(weekId);
 		for (Lesson lesson : tmp_list) {
 			DateTime lesson_start = new DateTime(lesson.getDate_start());
 			Date lesson_day = now.withDayOfWeek(lesson_start.getDayOfWeek()).toDate();
+			Integer dd = Days.daysBetween(new LocalDate(lesson.getDate_start()), 
+						 new LocalDate(lesson_day)).getDays();
 			if (compareDate(lesson.getDate_start(), lesson_day) &&
-				compareDate(lesson_day, lesson.getDate_end())) {
-				list.add(lesson);
+					compareDate(lesson_day, lesson.getDate_end())) {
+				Lesson2 lesson2 = new Lesson2();
+				lesson2.setCourseName(loadCourse(lesson.getCourseId()).getName());
+				lesson2.setDate(lesson_day);
+				lesson2.setLessonId(lesson.getLessonId());
+				lesson2.setTime_start(lesson.getTime());
+				Period period = new Period(new DateTime(lesson.getTime()).withTimeAtStartOfDay(),
+						new DateTime(lesson.getTime()));
+				Period duration = new Period(new DateTime(lesson.getDuration()).withTimeAtStartOfDay(),
+						new DateTime(lesson.getDuration()));
+				Period period2 = period.toStandardDuration().plus(duration.toStandardDuration()).toPeriod();
+				PeriodFormatter pf = new PeriodFormatterBuilder().minimumPrintedDigits(2)
+							.printZeroAlways().appendHours().appendLiteral(":")
+							.appendMinutes().toFormatter();
+				String pf2_str = pf.print(period2);
+				DateFormat time_f = new SimpleDateFormat("HH:mm");
+				lesson2.setTime_end(time_f.parse(pf2_str));
+				if (lesson.getPeriod() == 1) {
+					if (dd % 7 == 0) {
+						list.add(lesson2);
+					}
+				} else if (lesson.getPeriod() == 2) {
+					if (dd % 14 == 0) {
+						list.add(lesson2);
+					}
+				} else {
+					if (isEqualDate(lesson.getDate_start(), lesson_day)) {
+						list.add(lesson2);
+					}
+				}
 			}
 		}
 		session.close();

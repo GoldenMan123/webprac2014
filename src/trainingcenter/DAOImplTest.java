@@ -826,28 +826,35 @@ public class DAOImplTest {
 		
 		for (Student student : students) {
 			for (int i = week_begin.intValue(); i < week_end.intValue(); ++i) {
-				List<Lesson> lbs = null;
+				List<Lesson2> lbs = null;
 				try {
 					lbs = tc.getLessonsByStudent(student.getStudentId(), new Integer(i));
 				} catch (HibernateException e) {
 					assert(false);
+				} catch (ParseException e) {
+					assert(false);
 				}
 				assert(lbs != null);
 				DateTime now = new DateTime(new Date()).plusWeeks(new Integer(i));
-				for (Lesson lesson : lbs) {
+				for (Lesson2 lesson2 : lbs) {
 					boolean ok = false;
 					for (StudentCourse link : links) {
-						if ((link.getStudentId() == student.getStudentId()) &&
-							(link.getCourseId()) == lesson.getCourseId()) {
-							ok = true;
-							break;
+						try {
+							Course cur_course = tc.loadCourse(link.getCourseId());
+							if ((link.getStudentId() == student.getStudentId()) &&
+									(equals(cur_course.getName(), lesson2.getCourseName()))) {
+								ok = true;
+								break;
+							}
+						} catch (HibernateException e) {
+							assert(false);
 						}
 					}
 					assert(ok);
-					DateTime lesson_start = new DateTime(lesson.getDate_start());
+					DateTime lesson_start = new DateTime(lesson2.getDate());
 					Date lesson_day = now.withDayOfWeek(lesson_start.getDayOfWeek()).toDate();
-					assert(compareDate(lesson.getDate_start(), lesson_day) &&
-						compareDate(lesson_day, lesson.getDate_end()));
+					assert(compareDate(lesson2.getDate(), lesson_day) &&
+						compareDate(lesson_day, lesson2.getDate()));
 				}
 			}
 		}
@@ -857,7 +864,7 @@ public class DAOImplTest {
 	@DataProvider
 	public Object[][] lessonsByStudentTestData() {
 		return new Object[][] {
-			new Object[] { 0, 100 },
+			new Object[] { -100, 100 },
 		};
 	}
 	
@@ -883,20 +890,21 @@ public class DAOImplTest {
 		
 		for (Teacher teacher : teachers) {
 			for (int i = week_begin.intValue(); i < week_end.intValue(); ++i) {
-				List<Lesson> lbt = null;
+				List<Lesson2> lbt = null;
 				try {
 					lbt = tc.getLessonsByTeacher(teacher.getTeacherId(), new Integer(i));
 				} catch (HibernateException e) {
 					assert(false);
+				} catch (ParseException e) {
+					assert(false);
 				}
 				assert(lbt != null);
 				DateTime now = new DateTime(new Date()).plusWeeks(new Integer(i));
-				for (Lesson lesson : lbt) {
-					assert(lesson.getTeacherId() == teacher.getTeacherId());
-					DateTime lesson_start = new DateTime(lesson.getDate_start());
+				for (Lesson2 lesson2 : lbt) {
+					DateTime lesson_start = new DateTime(lesson2.getDate());
 					Date lesson_day = now.withDayOfWeek(lesson_start.getDayOfWeek()).toDate();
-					assert(compareDate(lesson.getDate_start(), lesson_day) &&
-						compareDate(lesson_day, lesson.getDate_end()));
+					assert(compareDate(lesson2.getDate(), lesson_day) &&
+						compareDate(lesson_day, lesson2.getDate()));
 				}
 			}
 		}
@@ -906,7 +914,7 @@ public class DAOImplTest {
 	@DataProvider
 	public Object[][] lessonsByTeacherTestData() {
 		return new Object[][] {
-			new Object[] { 0, 100 },
+			new Object[] { -100, 100 },
 		};
 	}
 	

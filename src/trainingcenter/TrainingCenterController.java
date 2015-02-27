@@ -58,7 +58,12 @@ public class TrainingCenterController {
         try {
             Student student = dao.loadStudent(id);
             model.addAttribute("student", student);
-            List<Lesson> lessons = dao.getLessonsByStudent(id, week_id);
+            List<Lesson2> lessons;
+			try {
+				lessons = dao.getLessonsByStudent(id, week_id);
+			} catch (ParseException e) {
+				return "error";
+			}
             model.addAttribute("lessons", lessons);
             model.addAttribute("week_id", week_id);
         } catch (HibernateException e) {
@@ -114,7 +119,12 @@ public class TrainingCenterController {
         try {
             Teacher teacher = dao.loadTeacher(id);
             model.addAttribute("teacher", teacher);
-            List<Lesson> lessons = dao.getLessonsByTeacher(id, week_id);
+            List<Lesson2> lessons;
+			try {
+				lessons = dao.getLessonsByTeacher(id, week_id);
+			} catch (ParseException e) {
+				return "error";
+			}
             model.addAttribute("lessons", lessons);
             model.addAttribute("week_id", week_id);
         } catch (HibernateException e) {

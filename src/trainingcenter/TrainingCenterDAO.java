@@ -1,5 +1,6 @@
 package trainingcenter;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -72,9 +73,9 @@ public interface TrainingCenterDAO {
 	
 	public List<Lesson> getLessonsByCourse(Integer courseId) throws HibernateException;
 	
-	public List<Lesson> getLessonsByStudent(Integer studentId, Integer weekId) throws HibernateException;
+	public List<Lesson2> getLessonsByStudent(Integer studentId, Integer weekId) throws HibernateException, ParseException;
 	
-	public List<Lesson> getLessonsByTeacher(Integer teacherId, Integer weekId) throws HibernateException;
+	public List<Lesson2> getLessonsByTeacher(Integer teacherId, Integer weekId) throws HibernateException, ParseException;
 
 	public List<Course> getCoursesByCompany(Integer companyId) throws HibernateException;
 	

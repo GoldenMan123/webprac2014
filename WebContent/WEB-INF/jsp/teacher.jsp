@@ -27,8 +27,12 @@ ${teacher.lastName} ${teacher.firstName} ${teacher.middleName}
 <c:forEach items="${lessons}" var="lesson">
 <a href="lesson?id=${lesson.lessonId}">
 <div class="student_entry" id="student_entry_less_${lesson.lessonId}">
-<fmt:formatDate value="${lesson.time}" var="time_str" pattern="HH:mm" />
-${time_str}
+<fmt:formatDate value="${lesson.time_start}" var="time_str1" pattern="HH:mm" />
+<fmt:formatDate value="${lesson.time_end}" var="time_str2" pattern="HH:mm" />
+<fmt:formatDate value="${lesson.date}" var="date_str" pattern="dd.MM.yyyy" />
+${lesson.courseName}<br>
+${date_str}<br>
+${time_str1} &mdash; ${time_str2}
 </div>
 </a>
 </c:forEach>
